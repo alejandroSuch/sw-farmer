@@ -9,12 +9,42 @@ const alphabetLength = alphabet.length;
 
 const input = start.toUpperCase();
 
-let firstIndex = alphabet.indexOf(input[0]);
-let secondIndex = alphabet.indexOf(input[1]);
-let thirdIndex = alphabet.indexOf(input[2]);
-let fourthIndex = alphabet.indexOf(input[3]);
-let fifthIndex = alphabet.indexOf(input[4]);
-let sixthIndex = alphabet.indexOf(input[5]);
+let indexes = [
+    alphabet.indexOf(input[0]),
+    alphabet.indexOf(input[1]),
+    alphabet.indexOf(input[2]),
+    alphabet.indexOf(input[3]),
+    alphabet.indexOf(input[4]),
+    alphabet.indexOf(input[5])
+];
+
+function getNextIndexes(_indexes) {
+    const result = [ ..._indexes ];
+
+    result[5] = ++result[5] % alphabetLength;
+    if(result[5] === 0) {
+        result[4] = ++result[4] % alphabetLength;
+        if(result[4] === 0) {
+            result[3] = ++result[3] % alphabetLength;
+            if(result[3] === 0) {
+                result[2] = ++result[2] % alphabetLength;
+                if(result[2] === 0) {
+                    result[1] = ++result[1] % alphabetLength;
+                    if(result[1] === 0) {
+                        result[0] = ++result[0] % alphabetLength;
+                        if(result[0] === 0) {
+                            console.log('Finished');
+                            process.exit(0);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return result;
+}
+
 
 const fsCb = (err) => {
     if(err) {
@@ -68,22 +98,8 @@ async function tryVoucher(voucher) {
 }
 
 (async function(){
-    for(let first = firstIndex; first < alphabetLength; first++) {
-        for(let second = secondIndex; second < alphabetLength; second++) {
-            for(let third = thirdIndex; third < alphabetLength; third++) {
-                for(let fourth = fourthIndex; fourth < alphabetLength; fourth++) {
-                    for(let fifth = fifthIndex; fifth < alphabetLength; fifth++) {
-                        for(let sixth = sixthIndex; sixth < alphabetLength; sixth++) {
-                            await tryVoucher(`${alphabet[first%alphabetLength]}${alphabet[second%alphabetLength]}${alphabet[third%alphabetLength]}${alphabet[fourth%alphabetLength]}${alphabet[fifth%alphabetLength]}${alphabet[sixth%alphabetLength]}`);
-                        }
-                        sixthIndex = 0;
-                    }
-                    fifthIndex = 0;
-                }
-                fourthIndex = 0;
-            }
-            thirdIndex = 0;
-        }
-        secondIndex = 0;
+    while(true) {
+        await tryVoucher(`${alphabet[indexes[0]]}${alphabet[indexes[1]]}${alphabet[indexes[2]]}${alphabet[indexes[3]]}${alphabet[indexes[4]]}${alphabet[indexes[5]]}`);
+        indexes = getNextIndexes(indexes);
     }
 })();
