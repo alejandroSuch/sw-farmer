@@ -92,6 +92,7 @@ async function tryVoucher(voucher) {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 console.log('Waiting 5 seconds...');
+                reject(null);
             }, 5000);
         });
     }
@@ -99,7 +100,9 @@ async function tryVoucher(voucher) {
 
 (async function(){
     while(true) {
-        await tryVoucher(`${alphabet[indexes[0]]}${alphabet[indexes[1]]}${alphabet[indexes[2]]}${alphabet[indexes[3]]}${alphabet[indexes[4]]}${alphabet[indexes[5]]}`);
+        try {
+            await tryVoucher(`${alphabet[indexes[0]]}${alphabet[indexes[1]]}${alphabet[indexes[2]]}${alphabet[indexes[3]]}${alphabet[indexes[4]]}${alphabet[indexes[5]]}`);
+        } catch(e) { }
         indexes = getNextIndexes(indexes);
     }
 })();
