@@ -1,7 +1,8 @@
 const fs = require('fs');
+const path = require('path');
 const child_process = require('child_process');
 
-const { start, accessToken } = require('./parse-arguments')(process.argv);
+const { start, accessToken, outDir } = require('./parse-arguments')(process.argv);
 
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 const alphabetLength = alphabet.length;
@@ -41,13 +42,14 @@ for(let first = firstIndex; first < alphabetLength; first++) {
                             result = JSON.parse(runCmd(requestData));
                             if(result.success) {
                                 console.log(`✅ ${requestData}`);
-                                fs.appendFileSync('./validCodes.txt', requestData + "\n");
+                                fs.appendFileSync(`${outDir}validCodes.txt`, requestData + "\n");
                             } else {
                                 console.log(`❎ ${requestData}`);
-                                fs.appendFileSync('./invalidCodes.txt', requestData + "\n");
+                                fs.appendFileSync(`${outDir}invalidCodes.txt`, requestData + "\n");
                             }
+
+                            fs.writeFileSync(`${outDir}lastCode.txt`, requestData);
                         } catch(e) {
-                            console.log('!!!');
                             console.error(e);
                         }
                     }
