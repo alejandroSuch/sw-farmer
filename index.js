@@ -50,7 +50,10 @@ for(let first = firstIndex; first < alphabetLength; first++) {
 
                             fs.writeFileSync(`${outDir}lastCode.txt`, requestData);
                         } catch(e) {
+                            console.error(`Error processing ${requestData}`);
                             console.error(e);
+                            console.error(result);
+                            process.exit(1);
                         }
                     }
                 }
