@@ -1,3 +1,3 @@
 # SW Farmer
 
-Let's farm some Star Wars voucher codes
+Let's (try to) farm some Star Wars voucher codes
