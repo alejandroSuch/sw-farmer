@@ -1,0 +1,23 @@
+{
+  "name": "sw-farmer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://alejandroSuch@github.com/alejandroSuch/sw-farmer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alejandroSuch/sw-farmer/issues"
+  },
+  "homepage": "https://github.com/alejandroSuch/sw-farmer#readme",
+  "dependencies": {
+    "commander": "^2.11.0"
+  }
+}
